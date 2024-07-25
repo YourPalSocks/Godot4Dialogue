@@ -1,9 +1,17 @@
 using Godot;
 using System;
-using System.Threading.Tasks;
+
+public enum TypeSpeed : int
+{
+    FAST = 2,
+    SLOW = 10,
+}
 
 public partial class DialogueBox : Control
 {
+    [Export]
+    private TypeSpeed typeSpeed = TypeSpeed.FAST;
+    
     private Label dialogueText;
     private Label speakerText;
 
@@ -12,7 +20,7 @@ public partial class DialogueBox : Control
     public static bool isTyping { get { return istyping; } }
     private int curChar = 0;
     private double t = 0;
-    private double typeRate = 0.05f;
+    private double tsR = 0;
 
     // Storing what line we're on
     private string curLine = "";
@@ -22,6 +30,7 @@ public partial class DialogueBox : Control
     {
         dialogueText = GetNode<Label>("%Text");
         speakerText = GetNode<Label>("%Speaker");
+        tsR = (double)typeSpeed / 100;
     }
 
     public override void _Process(double delta)
@@ -39,10 +48,10 @@ public partial class DialogueBox : Control
             }
             
             // Type
-            if(t >= typeRate)
+            if(t >= tsR)
             {
                 t = 0;
-                dialogueText.Text = dialogueText.Text + curLine[curChar++];
+                dialogueText.Text += curLine[curChar++];
             }
             // Check if done
             if(curChar >= curLine.Length)

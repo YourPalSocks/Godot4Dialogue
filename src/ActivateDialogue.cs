@@ -3,7 +3,7 @@ using System;
 
 public partial class ActivateDialogue : Area2D
 {
-    [Export(PropertyHint.File, "*.tres")]
+    [Export(PropertyHint.File, "*.json")]
     private string linesFile;
 
     [Export]
@@ -20,22 +20,21 @@ public partial class ActivateDialogue : Area2D
     {
         dMan = GetTree().Root.GetChild(0).GetNode<DialogueManager>("%DialogueUI");
         dMan.DialogueClose += _on_dialogue_closed;
+        // Connect in/out events
+        this.BodyEntered += _on_body_entered;
+        this.BodyExited += _on_body_exited;
     }
     
-    private void _on_Area2D_body_entered(Node2D body)
+    private void _on_body_entered(Node2D body)
     {
         if(body.GetType() == typeof(PlayerMovement))
-        {
             playerInArea = true;
-        }
     }
 
-    private void _on_Area2D_body_exited(Node2D body)
+    private void _on_body_exited(Node2D body)
     {
         if(body.GetType() == typeof(PlayerMovement))
-        {
             playerInArea = false;
-        }
     }
     
     public override void _Process(double delta)
@@ -49,6 +48,6 @@ public partial class ActivateDialogue : Area2D
 
     private void _on_dialogue_closed()
     {
-        this.Monitoring = true;
+        // this.Monitoring = true;
     }
 }

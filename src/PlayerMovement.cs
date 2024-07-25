@@ -3,7 +3,7 @@ using Godot;
 
 public partial class PlayerMovement : CharacterBody2D 
 {
-  private float speed = 225;
+  private float speed = 500;
 
 
   public override void _Process(double delta) 

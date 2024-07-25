@@ -37,7 +37,7 @@ public partial class ChoiceBox : Control
             HighlightCurrentChoice();
         }
 
-        if (DialogueManager.pressed && !DialogueBox.isTyping)
+        if (Input.IsActionJustPressed("Interact") && !DialogueBox.isTyping)
         {
             // Send result to Dialogue and close
             dMan.InsertNextLine((curEv.Speaker, curEv.Results[selectedChoice]));
@@ -61,11 +61,12 @@ public partial class ChoiceBox : Control
             Label l = new Label
             {
                 Text = c,
+                HorizontalAlignment = HorizontalAlignment.Center,
                 AutowrapMode = TextServer.AutowrapMode.WordSmart,
                 VerticalAlignment = VerticalAlignment.Center,
-                SizeFlagsVertical = SizeFlags.ExpandFill
+                SizeFlagsVertical = SizeFlags.ExpandFill,
             };
-            l.Set("custom_colors/font_color", Colors.Black);
+            l.AddThemeColorOverride("font_color", Colors.Black);
             // Add highlight if first
             if(num == 0)
                 l.AddThemeStyleboxOverride("normal", highlight);

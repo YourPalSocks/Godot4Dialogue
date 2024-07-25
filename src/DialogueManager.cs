@@ -22,8 +22,8 @@ public partial class DialogueManager : Control
     {
         diagBox = GetNode<DialogueBox>("DialogueBox");
         choiceBox = GetNode<ChoiceBox>("ChoiceBox");
-        // choiceBox.Visible = false;
-        // diagBox.Visible = false;
+        choiceBox.Visible = false;
+        diagBox.Visible = false;
     }
 
     public override void _Process(double delta)
@@ -35,7 +35,6 @@ public partial class DialogueManager : Control
         // Don't bother if not open, or choices open
         if (!diagBox.Visible || choiceBox.Visible)
             return;
-        
 
         // Check events
         foreach (IDialogueEvent ev in events)
