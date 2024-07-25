@@ -1,0 +1,108 @@
+[gd_scene load_steps=5 format=3 uid="uid://drifwwl8etgbq"]
+
+[ext_resource type="Texture2D" uid="uid://duwpqolkyop6c" path="res://sprites/metalPanel_blue.png" id="1"]
+[ext_resource type="Script" path="res://src/DialogueBox.cs" id="2"]
+[ext_resource type="Script" path="res://src/DialogueManager.cs" id="3"]
+[ext_resource type="Script" path="res://src/ChoiceBox.cs" id="4"]
+
+[node name="DialogueUI" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("3")
+
+[node name="DialogueBox" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.847
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 0.143982
+grow_horizontal = 2
+grow_vertical = 0
+script = ExtResource("2")
+
+[node name="Textbox" type="NinePatchRect" parent="DialogueBox"]
+layout_mode = 2
+texture = ExtResource("1")
+patch_margin_left = 19
+patch_margin_top = 28
+patch_margin_right = 19
+patch_margin_bottom = 16
+
+[node name="Text" type="Label" parent="DialogueBox/Textbox"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.308
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = -0.492001
+offset_bottom = -5.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "Text goes here..."
+
+[node name="Speaker" type="Label" parent="DialogueBox/Textbox"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.042
+anchor_right = 1.0
+anchor_bottom = 0.285
+offset_left = 8.0
+offset_top = -0.158
+offset_bottom = -0.215
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "Speaker"
+
+[node name="ChoiceBox" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.206
+anchor_bottom = 0.4
+offset_left = 854.0
+offset_top = 247.0
+offset_right = 854.0
+offset_bottom = 247.0
+script = ExtResource("4")
+
+[node name="Textbox" type="NinePatchRect" parent="ChoiceBox"]
+layout_mode = 2
+texture = ExtResource("1")
+patch_margin_left = 19
+patch_margin_top = 28
+patch_margin_right = 19
+patch_margin_bottom = 16
+
+[node name="MarginContainer" type="MarginContainer" parent="ChoiceBox"]
+layout_mode = 2
+theme_override_constants/margin_top = 50
+
+[node name="ChoiceStack" type="VBoxContainer" parent="ChoiceBox/MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Label" type="Label" parent="ChoiceBox/MarginContainer/ChoiceStack"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "TEXT"
+horizontal_alignment = 1
+
+[node name="Label2" type="Label" parent="ChoiceBox/MarginContainer/ChoiceStack"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "TEXT"
+horizontal_alignment = 1
+
+[node name="Label3" type="Label" parent="ChoiceBox/MarginContainer/ChoiceStack"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "TEXT"
+horizontal_alignment = 1

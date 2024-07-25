@@ -1,0 +1,16 @@
+# Godot Ignores
+.import/
+export.cfg
+export_presets.cfg
+.godot/*
+build/*
+
+# C# Project Files
+*.sln
+*.csproj
+.mono/
+data_*/
+mono_crash.*.json
+
+# IDE/Editor folders
+.vscode/*
