@@ -39,7 +39,7 @@ public partial class ActivateDialogue : Area2D
     
     public override void _Process(double delta)
     {
-        if(playerInArea && Input.IsKeyLabelPressed(Key.E) && !DialogueManager.isActive)
+        if(playerInArea && DialogueManager.pressed && !DialogueManager.isActive)
         {
             dMan.LoadLines(linesFile,chunk,speaker);
             this.Monitoring = false;
@@ -48,6 +48,6 @@ public partial class ActivateDialogue : Area2D
 
     private void _on_dialogue_closed()
     {
-        // this.Monitoring = true;
+        this.Monitoring = true;
     }
 }
