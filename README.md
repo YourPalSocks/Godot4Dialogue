@@ -11,7 +11,7 @@ A dynamic dialogue system for Godot 4.x .
 ## (Current) Limitations:
 - Events cannot launch off of each other
 - Choices can only add 1 line of dialogue
-Check out the [Issues](https://github.com/YourPalSocks/Godot4Dialogue/issues) page for more information.
+- Check out the [Issues](https://github.com/YourPalSocks/Godot4Dialogue/issues) page for more information.
 
 # How to Use
 <TODO...>
