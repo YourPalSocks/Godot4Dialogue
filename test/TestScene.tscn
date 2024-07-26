@@ -1,10 +1,10 @@
 [gd_scene load_steps=11 format=3 uid="uid://pbsqppl2bksw"]
 
-[ext_resource type="Texture2D" uid="uid://c3p7lsa8vambw" path="res://sprites/gray.png" id="1_ekogc"]
-[ext_resource type="Script" path="res://src/PlayerMovement.cs" id="2_2032p"]
-[ext_resource type="Texture2D" uid="uid://bfy883kfmmbhk" path="res://icon.svg" id="3_sg22s"]
-[ext_resource type="PackedScene" uid="uid://drifwwl8etgbq" path="res://prefs/DialogueBox.tscn" id="4_5bhhn"]
-[ext_resource type="PackedScene" uid="uid://c33djeo31xhly" path="res://prefs/npc.tscn" id="5_3wsiy"]
+[ext_resource type="Texture2D" uid="uid://c3p7lsa8vambw" path="res://test/gray.png" id="1_vrj4r"]
+[ext_resource type="Script" path="res://test/PlayerMovement.cs" id="2_8s3jt"]
+[ext_resource type="Texture2D" uid="uid://bfy883kfmmbhk" path="res://icon.svg" id="3_ejg88"]
+[ext_resource type="PackedScene" uid="uid://c33djeo31xhly" path="res://test/npc.tscn" id="4_bu34j"]
+[ext_resource type="PackedScene" uid="uid://drifwwl8etgbq" path="res://dialogue_sys/DialogueBox.tscn" id="5_rfm20"]
 
 [sub_resource type="RectangleShape2D" id="4"]
 size = Vector2(63, 1085)
@@ -29,7 +29,7 @@ position = Vector2(1, 1)
 [node name="Floor" type="Sprite2D" parent="Map"]
 position = Vector2(520, 500)
 scale = Vector2(18.3438, 16.5938)
-texture = ExtResource("1_ekogc")
+texture = ExtResource("1_vrj4r")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="Map"]
 
@@ -58,10 +58,10 @@ shape = SubResource("7")
 
 [node name="Player" type="CharacterBody2D" parent="."]
 position = Vector2(510, 793)
-script = ExtResource("2_2032p")
+script = ExtResource("2_8s3jt")
 
 [node name="Sprite" type="Sprite2D" parent="Player"]
-texture = ExtResource("3_sg22s")
+texture = ExtResource("3_ejg88")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
 shape = SubResource("3")
@@ -69,9 +69,9 @@ shape = SubResource("3")
 [node name="Camera2D" type="Camera2D" parent="Player"]
 zoom = Vector2(0.75, 0.75)
 
-[node name="NPC" parent="." instance=ExtResource("5_3wsiy")]
+[node name="NPC" parent="." instance=ExtResource("4_bu34j")]
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="DialogueUI" parent="CanvasLayer" instance=ExtResource("4_5bhhn")]
+[node name="DialogueUI" parent="CanvasLayer" instance=ExtResource("5_rfm20")]
 unique_name_in_owner = true

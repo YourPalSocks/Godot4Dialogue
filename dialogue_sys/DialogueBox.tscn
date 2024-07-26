@@ -1,9 +1,9 @@
 [gd_scene load_steps=5 format=3 uid="uid://drifwwl8etgbq"]
 
-[ext_resource type="Texture2D" uid="uid://duwpqolkyop6c" path="res://sprites/metalPanel_blue.png" id="1"]
-[ext_resource type="Script" path="res://src/DialogueBox.cs" id="2"]
-[ext_resource type="Script" path="res://src/DialogueManager.cs" id="3"]
-[ext_resource type="Script" path="res://src/ChoiceBox.cs" id="4"]
+[ext_resource type="Texture2D" uid="uid://duwpqolkyop6c" path="res://dialogue_sys/metalPanel_blue.png" id="1"]
+[ext_resource type="Script" path="res://dialogue_sys/src/DialogueBox.cs" id="2"]
+[ext_resource type="Script" path="res://dialogue_sys/src/DialogueManager.cs" id="3"]
+[ext_resource type="Script" path="res://dialogue_sys/src/ChoiceBox.cs" id="4"]
 
 [node name="DialogueUI" type="Control"]
 layout_mode = 3
@@ -73,6 +73,7 @@ offset_bottom = 0.223969
 grow_horizontal = 0
 grow_vertical = 2
 script = ExtResource("4")
+highlightloc = "res://dialogue_sys/HighlightedChoice.tres"
 
 [node name="Textbox" type="NinePatchRect" parent="ChoiceBox"]
 layout_mode = 2

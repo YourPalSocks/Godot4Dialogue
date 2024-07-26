@@ -6,7 +6,10 @@ public partial class ChoiceBox : Control
     private DialogueManager dMan;
     private VBoxContainer choices;
     private ChoiceEvent curEv;
-    private StyleBox highlight = GD.Load<StyleBox>("res://prefs/HighlightedChoice.tres");
+
+    [Export(PropertyHint.File, "*.tres")]
+    private string highlightloc;
+    private StyleBox highlight;
 
     private int selectedChoice = 0;
 
@@ -14,6 +17,7 @@ public partial class ChoiceBox : Control
     {
         choices = GetNode<VBoxContainer>("%ChoiceStack");
         dMan = GetParent<DialogueManager>();
+        highlight = GD.Load<StyleBox>(highlightloc);
     }
 
     public override void _Process(double delta)

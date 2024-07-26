@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://duwpqolkyop6c"
-path="res://.godot/imported/metalPanel_blue.png-946f60d34643382a95b0c0cd765bb456.ctex"
+uid="uid://c3p7lsa8vambw"
+path="res://.godot/imported/gray.png-b19c7192a74a8509fb8fefe8c7f5bc13.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/metalPanel_blue.png"
-dest_files=["res://.godot/imported/metalPanel_blue.png-946f60d34643382a95b0c0cd765bb456.ctex"]
+source_file="res://test/gray.png"
+dest_files=["res://.godot/imported/gray.png-b19c7192a74a8509fb8fefe8c7f5bc13.ctex"]
 
 [params]
 
