@@ -2,6 +2,10 @@ using Godot;
 using System;
 using System.Collections.Generic;
 
+using YamlDotNet.Serialization;
+using YamlDotNet.Serialization.NamingConventions;
+
+
 public interface IDialogueEvent
 {
     int lineStart { get; }
@@ -37,10 +41,14 @@ public class DialogueEventFactory
         var file = FileAccess.Open(filename, FileAccess.ModeFlags.Read);
         string strContent = file.GetAsText();
         file.Close();
-        Godot.Collections.Dictionary content = (Godot.Collections.Dictionary) Json.ParseString(strContent);
+        var deserializer = new DeserializerBuilder()
+            .WithNamingConvention(UnderscoredNamingConvention.Instance)
+            .Build();
+        Dictionary<object, object> content = deserializer.Deserialize<Dictionary<object, object>>(strContent);
+
         // Get the choices and results (parallel arrays)
-        Godot.Collections.Array choices = (Godot.Collections.Array) ((Godot.Collections.Dictionary) content[label])["choices"];
-        Godot.Collections.Array results = (Godot.Collections.Array) ((Godot.Collections.Dictionary) content[label])["results"];
+        List<object> choices = (List<object>) ((Dictionary<object, object>) content[label])["choices"];
+        List<object> results = (List<object>) ((Dictionary<object, object>) content[label])["results"];
 
         // Give new properties
         List<string> chL = new List<string>();

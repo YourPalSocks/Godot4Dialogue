@@ -1,0 +1,20 @@
+test:
+  text: 
+    - 'This is text'
+    - 'Test text'
+    - 'Text?'
+  options:
+    event:
+      line: 3
+      type: 'Choice'
+      name: 'test_choice'
+
+test_choice:
+  choices:
+    - 'Option 1'
+    - 'Option 2'
+    - 'Option 3'
+  results:
+    - 'Result 1'
+    - 'Result 2'
+    - 'Result 3'

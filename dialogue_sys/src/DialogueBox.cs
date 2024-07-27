@@ -31,6 +31,9 @@ public partial class DialogueBox : Control
         dialogueText = GetNode<Label>("%Text");
         speakerText = GetNode<Label>("%Speaker");
         tsR = (double)typeSpeed / 100;
+
+        dialogueText.Text = "";
+        speakerText.Text = "";
     }
 
     public override void _Process(double delta)
@@ -66,10 +69,15 @@ public partial class DialogueBox : Control
 
         // Reset
         curLine = d;
-        // TypeText();
         curChar = 0;
+        ClearBox();
         speakerText.Text = s;
-        dialogueText.Text = "";
         istyping = true; 
+    }
+
+    public void ClearBox()
+    {
+        dialogueText.Text = "";
+        speakerText.Text = "";
     }
 }
