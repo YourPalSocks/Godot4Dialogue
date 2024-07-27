@@ -1,5 +1,4 @@
 using Godot;
-using Godot.Collections;
 using System;
 using System.Collections.Generic;
 
@@ -88,45 +87,46 @@ public partial class DialogueManager : Control
         var file = FileAccess.Open(fn, FileAccess.ModeFlags.Read);
         string strContent = file.GetAsText();
         file.Close();
-        // Godot.Collections.Dictionary content = (Godot.Collections.Dictionary) Json.ParseString(strContent);
         var deserializer = new DeserializerBuilder()
             .WithNamingConvention(UnderscoredNamingConvention.Instance)
             .Build();
-        System.Collections.Generic.Dictionary<object, object> content = deserializer.Deserialize<System.Collections.Generic.Dictionary<object, object>>(strContent);
-        List<object> arr = (List<object>) ((System.Collections.Generic.Dictionary<object, object>) content[label])["text"];
+        Dictionary<object, object> content = deserializer.Deserialize<Dictionary<object, object>>(strContent);
+        List<object> arr = (List<object>) ((Dictionary<object, object>) content[label])["text"];
         // Load into lines array
         foreach (string l in arr)
         {
             lines.Add((speaker, l));
         }
-        // // Parse any options
-        // try
-        // {
-        //     Godot.Collections.Dictionary options = (Godot.Collections.Dictionary) ((Godot.Collections.Dictionary) content[label])["options"];
-        //     foreach (string opt in options.Keys)
-        //     {
-        //         if (opt == "event")
-        //         {
-        //             Godot.Collections.Dictionary evDict = (Godot.Collections.Dictionary) options[opt];
-        //             int eventLaunchIndex = Int32.Parse((string) evDict["line"]);
-        //             string eventType = (string) evDict["type"]; // Doing nothing for now.
-        //             string eventLabel = (string) evDict["name"];
-        //             IDialogueEvent ev = null;
-        //             switch(eventType.ToLower())
-        //             {
-        //                 case "choice":
-        //                     ev = DialogueEventFactory.CreateChoiceDialogueEvent(eventLaunchIndex, eventLabel, fn, speaker);
-        //                     events.Add(ev);
-        //                     break;
-
-        //                 // Put other kinds of events here
-        //             }
-        //         }
-        //     }
-        // }
-        // catch { /* Don't load any events. */ }
+        // Parse any options
+        Dictionary<object, object> options = (Dictionary<object, object>) ((Dictionary<object, object>) content[label])["options"];
+        try
+        {
+            foreach (string opt in options.Keys)
+            {
+                if (opt == "event")
+                {
+                    Dictionary<object, object> evDict = (Dictionary<object, object>) options[opt];
+                    int eventLaunchIndex = int.Parse((string) evDict["line"]);
+                    string eventType = (string) evDict["type"]; // Doing nothing for now.
+                    string eventLabel = (string) evDict["name"];
+                    switch (eventType.ToLower())
+                    {
+                        case "choice":
+                            IDialogueEvent ev = DialogueEventFactory.CreateChoiceDialogueEvent(eventLaunchIndex, eventLabel, fn, speaker);
+                            events.Add(ev);
+                            break;
+                        // Put other kinds of events here
+                    }
+                }
+            }
+        }
+        catch (Exception e)
+        {
+            GD.PrintErr($"Event could not be parsed: {e.Message}");
+        }
 
         // Reset and start
+        diagBox.ClearBox();
         diagBox.Visible = true;
         isActive = true;
         curLine = 0;

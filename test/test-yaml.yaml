@@ -7,7 +7,7 @@ test:
     event:
       line: 3
       type: 'Choice'
-      name: 'TestChoice'
+      name: 'test_choice'
 
 test_choice:
   choices:
