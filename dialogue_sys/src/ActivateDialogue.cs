@@ -3,7 +3,7 @@ using System;
 
 public partial class ActivateDialogue : Area2D
 {
-    [Export(PropertyHint.File, "*.json")]
+    [Export(PropertyHint.File, "*.yaml,*.yml")]
     private string linesFile;
 
     [Export]

@@ -1,9 +1,9 @@
-[gd_scene load_steps=11 format=3 uid="uid://pbsqppl2bksw"]
+[gd_scene load_steps=13 format=3 uid="uid://pbsqppl2bksw"]
 
 [ext_resource type="Texture2D" uid="uid://c3p7lsa8vambw" path="res://test/gray.png" id="1_vrj4r"]
 [ext_resource type="Script" path="res://test/PlayerMovement.cs" id="2_8s3jt"]
 [ext_resource type="Texture2D" uid="uid://bfy883kfmmbhk" path="res://icon.svg" id="3_ejg88"]
-[ext_resource type="PackedScene" uid="uid://c33djeo31xhly" path="res://test/npc.tscn" id="4_bu34j"]
+[ext_resource type="Script" path="res://dialogue_sys/src/ActivateDialogue.cs" id="5_6buue"]
 [ext_resource type="PackedScene" uid="uid://drifwwl8etgbq" path="res://dialogue_sys/DialogueBox.tscn" id="5_rfm20"]
 
 [sub_resource type="RectangleShape2D" id="4"]
@@ -20,6 +20,12 @@ size = Vector2(1158, 68)
 
 [sub_resource type="RectangleShape2D" id="3"]
 size = Vector2(120, 120)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_uh3dk"]
+size = Vector2(120, 120)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_lwjan"]
+radius = 295.427
 
 [node name="Root" type="Node2D"]
 position = Vector2(1, 1)
@@ -69,9 +75,26 @@ shape = SubResource("3")
 [node name="Camera2D" type="Camera2D" parent="Player"]
 zoom = Vector2(0.75, 0.75)
 
-[node name="NPC" parent="." instance=ExtResource("4_bu34j")]
-
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="DialogueUI" parent="CanvasLayer" instance=ExtResource("5_rfm20")]
 unique_name_in_owner = true
+
+[node name="NPC" type="StaticBody2D" parent="."]
+position = Vector2(517, 182)
+
+[node name="Sprite" type="Sprite2D" parent="NPC"]
+self_modulate = Color(0.859057, 0.225446, 0.947955, 1)
+texture = ExtResource("3_ejg88")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="NPC"]
+shape = SubResource("RectangleShape2D_uh3dk")
+
+[node name="Area2D" type="Area2D" parent="NPC"]
+script = ExtResource("5_6buue")
+linesFile = "res://test/test-yaml.yaml"
+speaker = "Test"
+chunk = "test"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="NPC/Area2D"]
+shape = SubResource("CircleShape2D_lwjan")
