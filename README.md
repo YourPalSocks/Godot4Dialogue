@@ -11,6 +11,9 @@ A dynamic dialogue system for Godot 4.x .
 ## (Current) Limitations:
 - Check out the [Issues](https://github.com/YourPalSocks/Godot4Dialogue/issues) page for more information.
 
+## Wiki:
+- Checkout out the [Wiki](https://github.com/YourPalSocks/Godot4Dialogue/wiki) for more in-depth information and how-to.
+
 # Example File
 A simple dialogue with 3 lines, ending in a choice:
 ```yaml
