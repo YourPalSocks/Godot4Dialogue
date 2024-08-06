@@ -55,6 +55,15 @@ public partial class DialogueManager : Control
                     events.Remove(ev);
                     break;
                 }
+                else if (ev.GetType() == typeof(TransitionEvent) && pressed)
+                {
+                    TransitionEvent t_ev = (TransitionEvent) ev;
+                    isActive = false;
+                    LoadLines(t_ev.Filename, t_ev.Label);
+                    events.Remove(ev);
+                    pressed = false;
+                    break;
+                }
             }
         }
 
@@ -71,13 +80,19 @@ public partial class DialogueManager : Control
         else if (pressed && !DialogueBox.isTyping)
         {
             // Cleanup and disable
-            lines.Clear();
-            events.Clear();
-            diagBox.Visible = false;
-            isActive = false;
+            Cleanup();
             EmitSignal(SignalName.DialogueClose);
             pressed = false;
         }
+    }
+
+    public void Cleanup()
+    {
+        diagBox.ClearBox();
+        lines.Clear();
+        events.Clear();
+        diagBox.Visible = false;
+        isActive = false;
     }
 
     public void LoadLines(string fn, string label)
@@ -85,7 +100,7 @@ public partial class DialogueManager : Control
         if (isActive)
             return;
 
-        lines.Clear();
+        Cleanup();
         // Get lines from the file
         var file = FileAccess.Open(fn, FileAccess.ModeFlags.Read);
         string strContent = file.GetAsText();
@@ -101,49 +116,46 @@ public partial class DialogueManager : Control
             lines.Add(l);
         }
         // Parse any options
-        Dictionary<object, object> options = (Dictionary<object, object>) ((Dictionary<object, object>) content[label])["options"];
         try
         {
+            Dictionary<object, object> options = (Dictionary<object, object>) ((Dictionary<object, object>) content[label])["options"];
             foreach (string opt in options.Keys)
             {
                 if (opt == "event")
                 {
                     Dictionary<object, object> evDict = (Dictionary<object, object>) options[opt];
-                    int eventLaunchIndex = int.Parse((string) evDict["line"]);
                     string eventType = (string) evDict["type"]; // Doing nothing for now.
                     string eventLabel = (string) evDict["name"];
+                    int eventLaunchIndex = 0;
+                    IDialogueEvent ev = null;
                     switch (eventType.ToLower())
                     {
                         case "choice":
-                            IDialogueEvent ev = DialogueEventFactory.CreateChoiceDialogueEvent(eventLaunchIndex, eventLabel, fn);
+                            eventLaunchIndex = lines.Count; // Choice has to occur on last line
+                            ev = DialogueEventFactory.CreateChoiceDialogueEvent(eventLaunchIndex, eventLabel, fn);
                             events.Add(ev);
                             break;
-                        // Put other kinds of events here
+
+                        case "transition":
+                            eventLaunchIndex = lines.Count;
+                            ev = DialogueEventFactory.CreateTransitionDialogueEvent(eventLaunchIndex, eventLabel, fn);
+                            events.Add(ev);
+                            break;
                     }
                 }
             }
         }
         catch (Exception e)
         {
-            GD.PrintErr($"Event could not be parsed: {e.Message}");
+            // Hide message about options being missing, assume its deliberate
+            if (!e.Message.Contains("given key 'options'"))
+                GD.PrintErr($"Event could not be parsed: {e.Message}");
         }
 
         // Reset and start
-        diagBox.ClearBox();
         diagBox.Visible = true;
         isActive = true;
         curLine = 0;
         EmitSignal(SignalName.DialogueOpen);
-    }
-
-    public void InsertNextLine(string nL)
-    {
-        lines.Insert(curLine, nL);
-        pressed = true;
-    }
-
-    private void OnMinigameClose()
-    {
-        pressed = true;
     }
 }
