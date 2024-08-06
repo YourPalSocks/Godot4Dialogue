@@ -14,7 +14,7 @@ public partial class DialogueManager : Control
     private DialogueBox diagBox;
     private ChoiceBox choiceBox;
 
-    private List<(string, string)> lines = new List<(string, string)>();
+    private List<string> lines = new List<string>();
     private List<IDialogueEvent> events = new List<IDialogueEvent>();
     private int curLine = -1;
 
@@ -60,7 +60,7 @@ public partial class DialogueManager : Control
         {
             if (curLine == 0 || (pressed && !DialogueBox.isTyping))
             {
-                diagBox.QueueText(lines[curLine].Item1, lines[curLine].Item2);
+                diagBox.QueueText(lines[curLine]);
                 curLine++;
             }
             pressed = false;
@@ -77,7 +77,7 @@ public partial class DialogueManager : Control
         }
     }
 
-    public void LoadLines(string fn, string label, string speaker)
+    public void LoadLines(string fn, string label)
     {
         if (isActive)
             return;
@@ -95,7 +95,7 @@ public partial class DialogueManager : Control
         // Load into lines array
         foreach (string l in arr)
         {
-            lines.Add((speaker, l));
+            lines.Add(l);
         }
         // Parse any options
         Dictionary<object, object> options = (Dictionary<object, object>) ((Dictionary<object, object>) content[label])["options"];
@@ -112,7 +112,7 @@ public partial class DialogueManager : Control
                     switch (eventType.ToLower())
                     {
                         case "choice":
-                            IDialogueEvent ev = DialogueEventFactory.CreateChoiceDialogueEvent(eventLaunchIndex, eventLabel, fn, speaker);
+                            IDialogueEvent ev = DialogueEventFactory.CreateChoiceDialogueEvent(eventLaunchIndex, eventLabel, fn);
                             events.Add(ev);
                             break;
                         // Put other kinds of events here
@@ -132,7 +132,7 @@ public partial class DialogueManager : Control
         curLine = 0;
     }
 
-    public void InsertNextLine((string, string) nL)
+    public void InsertNextLine(string nL)
     {
         lines.Insert(curLine, nL);
         pressed = true;

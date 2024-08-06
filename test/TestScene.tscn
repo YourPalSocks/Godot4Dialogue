@@ -93,7 +93,6 @@ shape = SubResource("RectangleShape2D_uh3dk")
 [node name="Area2D" type="Area2D" parent="NPC"]
 script = ExtResource("5_6buue")
 linesFile = "res://test/test-yaml.yaml"
-speaker = "Test"
 chunk = "test"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="NPC/Area2D"]

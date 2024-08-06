@@ -7,9 +7,6 @@ public partial class ActivateDialogue : Area2D
     private string linesFile;
 
     [Export]
-    private string speaker = "Speaker A";
-
-    [Export]
     private string chunk;
 
     private DialogueManager dMan;
@@ -41,7 +38,7 @@ public partial class ActivateDialogue : Area2D
     {
         if(playerInArea && DialogueManager.pressed && !DialogueManager.isActive)
         {
-            dMan.LoadLines(linesFile,chunk,speaker);
+            dMan.LoadLines(linesFile,chunk);
             this.Monitoring = false;
         }
     }

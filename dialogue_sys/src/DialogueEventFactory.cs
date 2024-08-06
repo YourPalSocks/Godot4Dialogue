@@ -13,7 +13,6 @@ public interface IDialogueEvent
 
 public struct ChoiceEvent : IDialogueEvent
 {
-    private string speaker;
     private string[] choices;
     private string[] results;
     private int ls;
@@ -21,21 +20,19 @@ public struct ChoiceEvent : IDialogueEvent
     public int lineStart{ get { return ls; } }
     public string[] Choices { get {return choices;} }
     public string[] Results { get {return results;} }
-    public string Speaker { get{return speaker;} }
 
-    public ChoiceEvent(int line, string sp, string[] c, string[] r)
+    public ChoiceEvent(int line, string[] c, string[] r)
     {
         choices = c;
         ls = line;
         results = r;
-        speaker = sp;
     }
 }
 
 // Class to create dialogue events without weird overhead
 public class DialogueEventFactory
 {
-    public static ChoiceEvent CreateChoiceDialogueEvent(int lineIndex, string label, string filename, string speaker)
+    public static ChoiceEvent CreateChoiceDialogueEvent(int lineIndex, string label, string filename)
     {
         // Get choices from the file at the label
         var file = FileAccess.Open(filename, FileAccess.ModeFlags.Read);
@@ -59,6 +56,6 @@ public class DialogueEventFactory
             resL.Add((string) results[i]);
         }
 
-        return new ChoiceEvent(lineIndex, speaker, chL.ToArray(), resL.ToArray());
+        return new ChoiceEvent(lineIndex, chL.ToArray(), resL.ToArray());
     }
 }

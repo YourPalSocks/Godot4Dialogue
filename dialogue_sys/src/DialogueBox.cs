@@ -14,9 +14,6 @@ public partial class DialogueBox : Control
     private TypeSpeed typeSpeed = TypeSpeed.FAST;
 
     [Export]
-    private bool useSpeaker = true;
-
-    [Export]
     private bool canSkip = true;
     
     private Label dialogueText;
@@ -41,10 +38,6 @@ public partial class DialogueBox : Control
 
         dialogueText.Text = "";
         speakerText.Text = "";
-
-        // Disable certain things with settings
-        if (!useSpeaker)
-            speakerText.Visible = false;
     }
 
     public override void _Process(double delta)
@@ -73,16 +66,24 @@ public partial class DialogueBox : Control
         }
     }
 
-    public void QueueText(string s, string d)
+    public void QueueText(string d)
     {
         if (istyping)
             return;
 
-        // Reset
-        curLine = d;
-        curChar = 0;
         ClearBox();
-        speakerText.Text = s;
+        // Find speaker based off colon
+        string[] line = d.Split(':');
+        if (line.Length == 1)
+            curLine = line[0].Trim();
+        else // Assume format 'speaker:line'
+        {
+            speakerText.Text = line[0].Trim();
+            curLine = line[1].Trim();
+        }
+
+        // Reset
+        curChar = 0;
         istyping = true; 
     }
 
