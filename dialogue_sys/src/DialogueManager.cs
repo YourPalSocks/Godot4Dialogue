@@ -109,16 +109,16 @@ public partial class DialogueManager : Control
                 if (opt == "event")
                 {
                     Dictionary<object, object> evDict = (Dictionary<object, object>) options[opt];
-                    int eventLaunchIndex = lines.Count; // Choice has to occur on last line
                     string eventType = (string) evDict["type"]; // Doing nothing for now.
                     string eventLabel = (string) evDict["name"];
                     switch (eventType.ToLower())
                     {
                         case "choice":
+                            int eventLaunchIndex = lines.Count; // Choice has to occur on last line
                             IDialogueEvent ev = DialogueEventFactory.CreateChoiceDialogueEvent(eventLaunchIndex, eventLabel, fn);
                             events.Add(ev);
                             break;
-                        // Put other kinds of events here
+                        // TODO, Put other kinds of events here
                     }
                 }
             }
