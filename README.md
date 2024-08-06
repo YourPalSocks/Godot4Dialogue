@@ -19,9 +19,9 @@ A simple dialogue with 3 lines, ending in a choice:
 ```yaml
 test:
   text: 
-    - 'This is text'
-    - 'Test text'
-    - 'Text?'
+    - 'Speaker A:This is text'
+    - 'Speaker A:Test text'
+    - 'Speaker A:Text?'
   options:
     event:
       line: 3
@@ -34,9 +34,9 @@ test_choice:
     - 'Option 2'
     - 'Option 3'
   results:
-    - 'Result 1'
-    - 'Result 2'
-    - 'Result 3'
+    - 'Speaker B:Result 1'
+    - 'Speaker B:Result 2'
+    - 'Speaker B:Result 3'
 
 ```
 ## Chunking
