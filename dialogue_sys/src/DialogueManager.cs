@@ -19,6 +19,9 @@ public partial class DialogueManager : Control
     private int curLine = -1;
 
     [Signal]
+    public delegate void DialogueOpenEventHandler();
+
+    [Signal]
     public delegate void DialogueCloseEventHandler();
 
 
@@ -130,6 +133,7 @@ public partial class DialogueManager : Control
         diagBox.Visible = true;
         isActive = true;
         curLine = 0;
+        EmitSignal(SignalName.DialogueOpen);
     }
 
     public void InsertNextLine(string nL)
