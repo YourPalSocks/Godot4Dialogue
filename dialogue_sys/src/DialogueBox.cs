@@ -9,8 +9,12 @@ public enum TypeSpeed : int
 
 public partial class DialogueBox : Control
 {
+    [ExportGroup("")]
     [Export]
     private TypeSpeed typeSpeed = TypeSpeed.FAST;
+
+    [Export]
+    private bool canSkip = true;
     
     private Label dialogueText;
     private Label speakerText;
@@ -42,7 +46,7 @@ public partial class DialogueBox : Control
         if (this.Visible && istyping)
         {
             // Check for interrupt
-            if (DialogueManager.pressed)
+            if (DialogueManager.pressed && canSkip)
             {
                 DialogueManager.pressed = false;
                 dialogueText.Text = curLine;
@@ -62,16 +66,24 @@ public partial class DialogueBox : Control
         }
     }
 
-    public void QueueText(string s, string d)
+    public void QueueText(string d)
     {
         if (istyping)
             return;
 
-        // Reset
-        curLine = d;
-        curChar = 0;
         ClearBox();
-        speakerText.Text = s;
+        // Find speaker based off colon
+        string[] line = d.Split(':');
+        if (line.Length == 1)
+            curLine = line[0].Trim();
+        else // Assume format 'speaker:line'
+        {
+            speakerText.Text = line[0].Trim();
+            curLine = line[1].Trim();
+        }
+
+        // Reset
+        curChar = 0;
         istyping = true; 
     }
 

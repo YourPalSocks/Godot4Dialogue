@@ -1,7 +1,7 @@
 test:
   text: 
-    - 'This is text'
-    - 'Test text'
+    - 'Me:This is text'
+    - 'Me:Test text'
     - 'Text?'
   options:
     event:
@@ -15,6 +15,6 @@ test_choice:
     - 'Option 2'
     - 'Option 3'
   results:
-    - 'Result 1'
-    - 'Result 2'
-    - 'Result 3'
+    - 'You:Result 1'
+    - 'You:Result 2'
+    - 'You:Result 3'

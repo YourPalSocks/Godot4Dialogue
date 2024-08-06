@@ -44,7 +44,7 @@ public partial class ChoiceBox : Control
         if (Input.IsActionJustPressed("Interact") && !DialogueBox.isTyping)
         {
             // Send result to Dialogue and close
-            dMan.InsertNextLine((curEv.Speaker, curEv.Results[selectedChoice]));
+            dMan.InsertNextLine(curEv.Results[selectedChoice]);
             this.Visible = false;
         }
     }
