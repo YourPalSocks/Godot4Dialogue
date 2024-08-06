@@ -9,8 +9,15 @@ public enum TypeSpeed : int
 
 public partial class DialogueBox : Control
 {
+    [ExportGroup("")]
     [Export]
     private TypeSpeed typeSpeed = TypeSpeed.FAST;
+
+    [Export]
+    private bool useSpeaker = true;
+
+    [Export]
+    private bool canSkip = true;
     
     private Label dialogueText;
     private Label speakerText;
@@ -34,6 +41,10 @@ public partial class DialogueBox : Control
 
         dialogueText.Text = "";
         speakerText.Text = "";
+
+        // Disable certain things with settings
+        if (!useSpeaker)
+            speakerText.Visible = false;
     }
 
     public override void _Process(double delta)
@@ -42,7 +53,7 @@ public partial class DialogueBox : Control
         if (this.Visible && istyping)
         {
             // Check for interrupt
-            if (DialogueManager.pressed)
+            if (DialogueManager.pressed && canSkip)
             {
                 DialogueManager.pressed = false;
                 dialogueText.Text = curLine;
