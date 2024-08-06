@@ -44,7 +44,9 @@ public partial class ChoiceBox : Control
         if (Input.IsActionJustPressed("Interact") && !DialogueBox.isTyping)
         {
             // Send result to Dialogue and close
-            dMan.InsertNextLine(curEv.Results[selectedChoice]);
+            // TODO, this is a really hacky override
+            DialogueManager.isActive = false;
+            dMan.LoadLines(curEv.Filename , curEv.Results[selectedChoice]);
             this.Visible = false;
         }
     }

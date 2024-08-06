@@ -15,17 +15,20 @@ public struct ChoiceEvent : IDialogueEvent
 {
     private string[] choices;
     private string[] results;
+    private string filename;
     private int ls;
 
     public int lineStart{ get { return ls; } }
     public string[] Choices { get {return choices;} }
     public string[] Results { get {return results;} }
+    public string Filename { get {return filename;} }
 
-    public ChoiceEvent(int line, string[] c, string[] r)
+    public ChoiceEvent(int line, string[] c, string[] r, string fn)
     {
         choices = c;
         ls = line;
         results = r;
+        filename = fn;
     }
 }
 
@@ -56,6 +59,6 @@ public class DialogueEventFactory
             resL.Add((string) results[i]);
         }
 
-        return new ChoiceEvent(lineIndex, chL.ToArray(), resL.ToArray());
+        return new ChoiceEvent(lineIndex, chL.ToArray(), resL.ToArray(), filename);
     }
 }

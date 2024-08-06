@@ -101,9 +101,9 @@ public partial class DialogueManager : Control
             lines.Add(l);
         }
         // Parse any options
-        Dictionary<object, object> options = (Dictionary<object, object>) ((Dictionary<object, object>) content[label])["options"];
         try
         {
+            Dictionary<object, object> options = (Dictionary<object, object>) ((Dictionary<object, object>) content[label])["options"];
             foreach (string opt in options.Keys)
             {
                 if (opt == "event")
