@@ -4,14 +4,11 @@ A dynamic dialogue system for Godot 4.x .
 - Read text chunks from [YAML](https://yaml.org/) files
 - Different typing speeds
 - Events to allow player choices
-- Custom signals for dialogue closing
+- Custom signals for certain events
 - Actions tied to Godot Input Map for easy re-mapping
 - Create your own events to trigger functionality on certain lines 
   
 ## (Current) Limitations:
-- Events cannot launch off of each other
-- Choices can only add 1 line of dialogue
-- A piece of dialogue can only have one 'speaker'
 - Check out the [Issues](https://github.com/YourPalSocks/Godot4Dialogue/issues) page for more information.
 
 # Example File
