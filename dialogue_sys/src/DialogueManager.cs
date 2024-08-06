@@ -109,7 +109,7 @@ public partial class DialogueManager : Control
                 if (opt == "event")
                 {
                     Dictionary<object, object> evDict = (Dictionary<object, object>) options[opt];
-                    int eventLaunchIndex = int.Parse((string) evDict["line"]);
+                    int eventLaunchIndex = lines.Count; // Choice has to occur on last line
                     string eventType = (string) evDict["type"]; // Doing nothing for now.
                     string eventLabel = (string) evDict["name"];
                     switch (eventType.ToLower())
@@ -125,7 +125,9 @@ public partial class DialogueManager : Control
         }
         catch (Exception e)
         {
-            GD.PrintErr($"Event could not be parsed: {e.Message}");
+            // Hide message about options being missing, assume its deliberate
+            if (!e.Message.Contains("given key 'options'"))
+                GD.PrintErr($"Event could not be parsed: {e.Message}");
         }
 
         // Reset and start

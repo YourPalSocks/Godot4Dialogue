@@ -5,7 +5,6 @@ test:
     - 'Text?'
   options:
     event:
-      line: 3
       type: 'Choice'
       name: 'test_choice'
 
@@ -24,7 +23,6 @@ test_choice_result_a:
     - 'You:Result 1-1'
   options:
     event:
-      line: 1
       type: 'Choice'
       name: 'test_choice2'
 
@@ -46,8 +44,12 @@ test_choice2:
 
 subchoice_result_a:
   text:
-    -'You:Result 2-1'
+    - 'You:Result 2-1'
 
 subchoice_result_b:
   text:
     - 'You:Result 2-2'
+
+ending_text:
+  text:
+    - 'The end...'
