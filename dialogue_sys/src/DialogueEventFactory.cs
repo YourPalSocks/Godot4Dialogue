@@ -11,22 +11,40 @@ public interface IDialogueEvent
     int lineStart { get; }
 }
 
+public struct TransitionEvent : IDialogueEvent
+{
+    private int line;
+    private string label;
+    private string filename;
+
+    public int lineStart{ get{return line;} }
+    public string Label{ get{return label;} }
+    public string Filename { get {return filename;} }
+    
+    public TransitionEvent(int ls, string lb, string fn)
+    {
+        line = ls;
+        label = lb;
+        filename = fn;
+    }
+}
+
 public struct ChoiceEvent : IDialogueEvent
 {
+    private int line;
     private string[] choices;
     private string[] results;
     private string filename;
-    private int ls;
 
-    public int lineStart{ get { return ls; } }
+    public int lineStart{ get { return line; } }
     public string[] Choices { get {return choices;} }
     public string[] Results { get {return results;} }
     public string Filename { get {return filename;} }
 
-    public ChoiceEvent(int line, string[] c, string[] r, string fn)
+    public ChoiceEvent(int ls, string[] c, string[] r, string fn)
     {
         choices = c;
-        ls = line;
+        line = ls;
         results = r;
         filename = fn;
     }
@@ -58,7 +76,11 @@ public class DialogueEventFactory
             chL.Add((string) choices[i]);
             resL.Add((string) results[i]);
         }
-
         return new ChoiceEvent(lineIndex, chL.ToArray(), resL.ToArray(), filename);
+    }
+
+    public static TransitionEvent CreateTransitionDialogueEvent(int lineIndex, string label, string filename)
+    {
+        return new TransitionEvent(lineIndex, label, filename);
     }
 }

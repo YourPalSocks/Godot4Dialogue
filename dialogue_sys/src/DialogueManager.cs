@@ -55,6 +55,14 @@ public partial class DialogueManager : Control
                     events.Remove(ev);
                     break;
                 }
+                else if (ev.GetType() == typeof(TransitionEvent) && pressed)
+                {
+                    TransitionEvent t_ev = (TransitionEvent) ev;
+                    isActive = false;
+                    LoadLines(t_ev.Filename, t_ev.Label);
+                    events.Remove(ev);
+                    break;
+                }
             }
         }
 
@@ -111,14 +119,21 @@ public partial class DialogueManager : Control
                     Dictionary<object, object> evDict = (Dictionary<object, object>) options[opt];
                     string eventType = (string) evDict["type"]; // Doing nothing for now.
                     string eventLabel = (string) evDict["name"];
+                    int eventLaunchIndex = 0;
+                    IDialogueEvent ev = null;
                     switch (eventType.ToLower())
                     {
                         case "choice":
-                            int eventLaunchIndex = lines.Count; // Choice has to occur on last line
-                            IDialogueEvent ev = DialogueEventFactory.CreateChoiceDialogueEvent(eventLaunchIndex, eventLabel, fn);
+                            eventLaunchIndex = lines.Count; // Choice has to occur on last line
+                            ev = DialogueEventFactory.CreateChoiceDialogueEvent(eventLaunchIndex, eventLabel, fn);
                             events.Add(ev);
                             break;
-                        // TODO, Put other kinds of events here
+
+                        case "transition":
+                            eventLaunchIndex = lines.Count;
+                            ev = DialogueEventFactory.CreateTransitionDialogueEvent(eventLaunchIndex, eventLabel, fn);
+                            events.Add(ev);
+                            break;
                     }
                 }
             }
@@ -136,16 +151,5 @@ public partial class DialogueManager : Control
         isActive = true;
         curLine = 0;
         EmitSignal(SignalName.DialogueOpen);
-    }
-
-    public void InsertNextLine(string nL)
-    {
-        lines.Insert(curLine, nL);
-        pressed = true;
-    }
-
-    private void OnMinigameClose()
-    {
-        pressed = true;
     }
 }
