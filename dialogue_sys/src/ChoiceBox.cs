@@ -41,13 +41,14 @@ public partial class ChoiceBox : Control
             HighlightCurrentChoice();
         }
 
-        if (Input.IsActionJustPressed("Interact") && !DialogueBox.isTyping)
+        if (DialogueManager.pressed && !DialogueBox.isTyping)
         {
             // Send result to Dialogue and close
             // TODO, this is a really hacky override
             DialogueManager.isActive = false;
             dMan.LoadLines(curEv.Filename , curEv.Results[selectedChoice]);
             this.Visible = false;
+            DialogueManager.pressed = false;
         }
     }
 

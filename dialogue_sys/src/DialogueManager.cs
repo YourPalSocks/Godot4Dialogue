@@ -61,6 +61,7 @@ public partial class DialogueManager : Control
                     isActive = false;
                     LoadLines(t_ev.Filename, t_ev.Label);
                     events.Remove(ev);
+                    pressed = false;
                     break;
                 }
             }
@@ -79,13 +80,19 @@ public partial class DialogueManager : Control
         else if (pressed && !DialogueBox.isTyping)
         {
             // Cleanup and disable
-            lines.Clear();
-            events.Clear();
-            diagBox.Visible = false;
-            isActive = false;
+            Cleanup();
             EmitSignal(SignalName.DialogueClose);
             pressed = false;
         }
+    }
+
+    public void Cleanup()
+    {
+        diagBox.ClearBox();
+        lines.Clear();
+        events.Clear();
+        diagBox.Visible = false;
+        isActive = false;
     }
 
     public void LoadLines(string fn, string label)
@@ -93,7 +100,7 @@ public partial class DialogueManager : Control
         if (isActive)
             return;
 
-        lines.Clear();
+        Cleanup();
         // Get lines from the file
         var file = FileAccess.Open(fn, FileAccess.ModeFlags.Read);
         string strContent = file.GetAsText();
@@ -146,7 +153,6 @@ public partial class DialogueManager : Control
         }
 
         // Reset and start
-        diagBox.ClearBox();
         diagBox.Visible = true;
         isActive = true;
         curLine = 0;
