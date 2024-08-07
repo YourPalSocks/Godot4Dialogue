@@ -6,7 +6,14 @@ A dynamic dialogue system for Godot 4.x .
 - Events to allow player choices
 - Custom signals for certain events
 - Actions tied to Godot Input Map for easy re-mapping
-- Create your own events to trigger functionality on certain lines 
+- Create your own events to trigger functionality on certain lines
+
+## Requirements
+- Godot v4.x w/ Mono
+- Dotnet v8.0
+
+## Dependencies
+- [YamlDotNet](https://github.com/aaubry/YamlDotNet) (used to parse Yaml files as native C# objects)
   
 ## (Current) Limitations:
 - Check out the [Issues](https://github.com/YourPalSocks/Godot4Dialogue/issues) page for more information.
