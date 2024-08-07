@@ -13,6 +13,7 @@ public partial class DialogueManager : Control
 
     private DialogueBox diagBox;
     private ChoiceBox choiceBox;
+    private Timer timer;
 
     private List<string> lines = new List<string>();
     private List<IDialogueEvent> events = new List<IDialogueEvent>();
@@ -29,6 +30,7 @@ public partial class DialogueManager : Control
     {
         diagBox = GetNode<DialogueBox>("DialogueBox");
         choiceBox = GetNode<ChoiceBox>("ChoiceBox");
+        timer = GetNode<Timer>("Timer");
         choiceBox.Visible = false;
         diagBox.Visible = false;
     }
@@ -40,7 +42,7 @@ public partial class DialogueManager : Control
             pressed = true;
 
         // Don't bother if not open, or choices open
-        if (!diagBox.Visible || choiceBox.Visible)
+        if (!diagBox.Visible || choiceBox.Visible || timer.TimeLeft != 0)
             return;
 
         // Check events
@@ -62,6 +64,14 @@ public partial class DialogueManager : Control
                     LoadLines(t_ev.Filename, t_ev.Label);
                     events.Remove(ev);
                     pressed = false;
+                    break;
+                }
+                else if (ev.GetType() == typeof(WaitEvent))
+                {
+                    WaitEvent w_ev = (WaitEvent) ev;
+                    timer.WaitTime = w_ev.TimeSec;
+                    timer.Start();
+                    events.Remove(ev);
                     break;
                 }
             }
@@ -125,20 +135,29 @@ public partial class DialogueManager : Control
                 {
                     Dictionary<object, object> evDict = (Dictionary<object, object>) options[opt];
                     string eventType = (string) evDict["type"]; // Doing nothing for now.
-                    string eventLabel = (string) evDict["name"];
                     int eventLaunchIndex = 0;
+                    string eventLabel = "";
                     IDialogueEvent ev = null;
                     switch (eventType.ToLower())
                     {
                         case "choice":
                             eventLaunchIndex = lines.Count; // Choice has to occur on last line
+                            eventLabel = (string) evDict["name"];
                             ev = DialogueEventFactory.CreateChoiceDialogueEvent(eventLaunchIndex, eventLabel, fn);
                             events.Add(ev);
                             break;
 
                         case "transition":
                             eventLaunchIndex = lines.Count;
+                            eventLabel = (string) evDict["name"];
                             ev = DialogueEventFactory.CreateTransitionDialogueEvent(eventLaunchIndex, eventLabel, fn);
+                            events.Add(ev);
+                            break;
+
+                        case "wait":
+                            eventLaunchIndex = int.Parse((string) evDict["line"]);
+                            int waitTime = int.Parse((string) evDict["time"]);
+                            ev = DialogueEventFactory.CreateWaitDialogueEvent(eventLaunchIndex, waitTime);
                             events.Add(ev);
                             break;
                     }
