@@ -7,6 +7,10 @@ test:
     event:
       type: 'Choice'
       name: 'test_choice'
+    event:
+      type: 'Wait'
+      line: 2
+      time: 3
 
 test_choice:
   choices:

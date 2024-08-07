@@ -29,6 +29,21 @@ public struct TransitionEvent : IDialogueEvent
     }
 }
 
+public struct WaitEvent : IDialogueEvent
+{
+    private int line;
+    private int timeS;
+
+    public int lineStart{ get{return line;} }
+    public int TimeSec{ get{return timeS;} }
+
+    public WaitEvent(int ls, int tm)
+    {
+        line = ls;
+        timeS = tm;
+    }
+}
+
 public struct ChoiceEvent : IDialogueEvent
 {
     private int line;
@@ -82,5 +97,10 @@ public class DialogueEventFactory
     public static TransitionEvent CreateTransitionDialogueEvent(int lineIndex, string label, string filename)
     {
         return new TransitionEvent(lineIndex, label, filename);
+    }
+
+    public static WaitEvent CreateWaitDialogueEvent(int lineIndex, int timeS)
+    {
+        return new WaitEvent(lineIndex, timeS);
     }
 }
