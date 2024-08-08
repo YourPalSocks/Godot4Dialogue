@@ -13,7 +13,7 @@ config_version=5
 config/name="DialogueSystem"
 run/main_scene="res://test/TestScene.tscn"
 config/features=PackedStringArray("4.2", "C#", "Mobile")
-config/icon="res://icon.svg"
+config/icon="res://godot4dialoguelogo.svg"
 
 [display]
 
