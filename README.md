@@ -1,5 +1,9 @@
 # 🗣️🗣️ Godot 4 Dialogue System 🗣️🗣️
-A dynamic dialogue system for Godot 4.x .
+<p align='center'>
+  <img src='https://github.com/YourPalSocks/Godot4Dialogue/blob/master/godot4dialoguelogo.svg'>
+</p>
+  
+A dynamic dialogue system for Godot 4.x written in C#.
 ## Features:
 - Read text chunks from [YAML](https://yaml.org/) files
 - Different typing speeds
