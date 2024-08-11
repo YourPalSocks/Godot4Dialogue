@@ -131,7 +131,7 @@ public partial class DialogueManager : Control
             Dictionary<object, object> options = (Dictionary<object, object>) ((Dictionary<object, object>) content[label])["options"];
             foreach (string opt in options.Keys)
             {
-                if (opt == "event")
+                if (opt.Contains("event"))
                 {
                     Dictionary<object, object> evDict = (Dictionary<object, object>) options[opt];
                     string eventType = (string) evDict["type"]; // Doing nothing for now.
