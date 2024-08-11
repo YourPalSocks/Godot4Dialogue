@@ -73,7 +73,7 @@ public partial class DialogueBox : Control
 
         ClearBox();
         // Find speaker based off colon
-        string[] line = d.Split(':');
+        string[] line = d.Split("::");
         if (line.Length == 1)
             curLine = line[0].Trim();
         else // Assume format 'speaker:line'
