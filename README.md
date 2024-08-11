@@ -30,8 +30,8 @@ A simple dialogue with 3 lines, ending in a choice:
 ```yaml
 test:
   text: 
-    - 'Me:This is text'
-    - 'Me:Test text'
+    - 'Me::This is text'
+    - 'Me::Test text'
     - 'Text?'
   options:
     event:
@@ -50,7 +50,7 @@ test_choice:
 
 test_choice_result_a:
   text:
-    - 'You:Result 1-1'
+    - 'You::Result 1-1'
   options:
     event:
       type: 'Choice'
@@ -82,7 +82,7 @@ test_choice2:
 
 subchoice_result_a:
   text:
-    - 'You:Result 2-1'
+    - 'You::Result 2-1'
   options:
     event:
       type: 'Transition'
@@ -90,7 +90,7 @@ subchoice_result_a:
 
 subchoice_result_b:
   text:
-    - 'You:Result 2-2'
+    - 'You::Result 2-2'
   options:
     event:
       type: 'Transition'
