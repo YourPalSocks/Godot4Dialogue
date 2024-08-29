@@ -25,6 +25,8 @@ public partial class DialogueManager : Control
     [Signal]
     public delegate void DialogueCloseEventHandler();
 
+    bool autoProgress = false;
+
 
     public override void _Ready()
     {
@@ -80,14 +82,16 @@ public partial class DialogueManager : Control
         // Check if we have a line to give
         if (curLine < lines.Count)
         {
-            if (curLine == 0 || (pressed && !DialogueBox.isTyping))
+            // Display next line
+            // TODO, If autoProgress, wait a while before moving on
+            if (curLine == 0 || (pressed && !DialogueBox.isTyping) || (autoProgress && !DialogueBox.isTyping))
             {
                 diagBox.QueueText(lines[curLine]);
                 curLine++;
             }
             pressed = false;
         }
-        else if (pressed && !DialogueBox.isTyping)
+        else if ((pressed && !DialogueBox.isTyping) || (autoProgress && !DialogueBox.isTyping))
         {
             // Cleanup and disable
             Cleanup();
@@ -161,6 +165,21 @@ public partial class DialogueManager : Control
                             events.Add(ev);
                             break;
                     }
+                }
+                // Other options
+                if (opt == "autoProgress")
+                {
+                    // TODO, enable auto progression for this chunk
+                    if (bool.TryParse((string) options[opt], out bool res))
+                    {
+                        if (res == true)
+                        {
+                            // TODO, Maybe put this in some kind of 'chunkSettings' object
+                            autoProgress = true;
+                        }
+                    }
+                    else
+                        GD.PrintErr($"ERROR: 'autoProgress' option could not be parsed (got: '{options[opt]}'), expected: (True/False)");
                 }
             }
         }

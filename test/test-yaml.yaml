@@ -4,6 +4,7 @@ test:
     - 'Me::Test text'
     - 'Text?'
   options:
+    autoProgress: True
     event:
       type: 'Choice'
       name: 'test_choice'
